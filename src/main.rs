@@ -1,3 +1,5 @@
+#![windows_subsystem = "windows"]
+
 use druid::{AppLauncher, Color, Command, Data, Env, Lens, Selector, Widget, WidgetExt, WindowDesc};
 use druid::widget::{Button, Flex, Label, List, TextBox};
 use std::sync::Arc;
@@ -17,6 +19,7 @@ struct Task {
     description: String,
     status: String,
 }
+
 fn build_ui() -> impl Widget<TodoState> {
     let input = TextBox::new()
         .with_placeholder("Ajouter une tâche...")

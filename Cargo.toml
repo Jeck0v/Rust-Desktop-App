@@ -5,3 +5,13 @@ edition = "2021"
 
 [dependencies]
 druid = "0.8.3"
+
+[[bin]]
+name = "Project_1"
+path = "src/main.rs"
+# Indique que l'application est une GUI (et non une console)
+required-features = ["windows-gui"]
+
+[features]
+# gui activé sur windows
+windows-gui = []
