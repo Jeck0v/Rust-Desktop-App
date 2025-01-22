@@ -7,7 +7,7 @@ Step by step.
 ```rust
 cargo build
 ```
-Test the .exe
+Test the .exe (just for windows actually)
 
 ```rust
 cargo build --release
