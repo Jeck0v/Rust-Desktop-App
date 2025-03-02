@@ -3,7 +3,7 @@
 use druid::{
     AppLauncher, Color, Command, Data, Env, Lens, Selector, Widget, WidgetExt, WindowDesc,
 };
-use druid::widget::{Button, Flex, Label, List, TextBox};
+use druid::widget::{Button, Flex, Label, List, Scroll, TextBox};
 use rusqlite::{params, Connection, Result};
 use std::sync::Arc;
 
@@ -86,22 +86,41 @@ fn build_ui() -> impl Widget<TodoState> {
     });
 
     let task_list = List::new(|| {
-        Flex::row()
-            .with_child(Label::new(|item: &Task, _env: &_| item.description.clone()).fix_width(200.0))
-            .with_child(Label::new(|item: &Task, _env: &_| format!("Statut: {}", item.status)).fix_width(100.0))
-            .with_child(Button::new("Supprimer").on_click(|ctx, task: &mut Task, _env| {
-                ctx.submit_command(Command::new(DELETE_TASK, task.id, druid::Target::Auto));
-            }))
+        Flex::column()
+            .with_child(
+                Flex::row()
+                    .with_flex_child(
+                        Label::new(|item: &Task, _env: &_| item.description.clone())
+                            .with_line_break_mode(druid::widget::LineBreaking::WordWrap)
+                            .expand_width(),
+                        1.0,
+                    )
+                    .with_spacer(10.0)
+                    .with_flex_child(
+                        Label::new(|item: &Task, _env: &_| format!("Statut: {}", item.status))
+                            .with_line_break_mode(druid::widget::LineBreaking::WordWrap)
+                            .expand_width(),
+                        1.0,
+                    )
+                    .with_spacer(10.0)
+                    .with_child(Button::new("Supprimer").on_click(|ctx, task: &mut Task, _env| {
+                        ctx.submit_command(Command::new(DELETE_TASK, task.id, druid::Target::Auto));
+                    })),
+            )
+            .with_spacer(10.0)
     })
         .lens(TodoState::tasks);
 
     Flex::column()
         .with_child(input)
+        .with_spacer(20.0)
         .with_child(status_input)
+        .with_spacer(20.0)
         .with_child(add_task_button)
-        .with_flex_child(task_list, 1.0)
+        .with_spacer(20.0)
+        .with_flex_child(Scroll::new(task_list).vertical().expand_height(), 1.0)
         .padding(20.0)
-        .background(Color::rgb8(10, 140, 90))
+        .background(Color::rgb8(21, 22, 22))
 }
 
 fn main() {
