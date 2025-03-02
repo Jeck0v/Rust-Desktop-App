@@ -96,9 +96,11 @@ fn build_ui() -> impl Widget<TodoState> {
                         1.0,
                     )
                     .with_spacer(10.0)
-                    .with_child(
+                    .with_flex_child(
                         Label::new(|item: &Task, _env: &_| format!("Statut: {}", item.status))
-                            .fix_width(100.0),
+                            .with_line_break_mode(druid::widget::LineBreaking::WordWrap)
+                            .expand_width(),
+                        1.0,
                     )
                     .with_spacer(10.0)
                     .with_child(Button::new("Supprimer").on_click(|ctx, task: &mut Task, _env| {
