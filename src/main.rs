@@ -93,7 +93,7 @@ fn build_ui() -> impl Widget<TodoState> {
                 ctx.submit_command(Command::new(DELETE_TASK, task.id, druid::Target::Auto));
             }))
     })
-    .lens(TodoState::tasks);
+        .lens(TodoState::tasks);
 
     Flex::column()
         .with_child(input)
@@ -136,7 +136,7 @@ impl druid::AppDelegate<TodoState> for Delegate {
         if let Some(task_id) = cmd.get(DELETE_TASK) {
             let conn = init_db().unwrap();
             conn.execute("DELETE FROM tasks WHERE id = ?1", params![task_id]).unwrap();
-            
+
             let tasks = Arc::make_mut(&mut data.tasks);
             tasks.retain(|task| task.id != *task_id);
             return druid::Handled::Yes;
