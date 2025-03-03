@@ -2,10 +2,17 @@
 name = "Project_1"
 version = "0.1.0"
 edition = "2021"
+build = "build.rs"
+
+[build-dependencies]
+winres = "0.1"
+embed-resource = "2.4"
+
 
 [dependencies]
 druid = "0.8.3"
 rusqlite = { version = "0.29", features = ["bundled"] }
+
 
 [[bin]]
 name = "Project_1"
