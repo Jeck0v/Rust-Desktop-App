@@ -1,6 +1,4 @@
 #![windows_subsystem = "windows"]
-
-
 use druid::{
     AppLauncher, Color, Command, Data, Env, Lens, Selector, Widget, WidgetExt, WindowDesc,
 };
